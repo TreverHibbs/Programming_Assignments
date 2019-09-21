@@ -156,8 +156,6 @@ myMenu.addMenuItem(myPurplePopeye);
 myMenu.addMenuItem(myBrazilianSunrise);
 myMenu.addMenuItem(myBeetBooster);
 
-console.log(myMenu.findMenuItem("banana"));
-
 myDrink = new Drink(myBananaberry, "small");
 
 //console.log(myDrink.drink);
@@ -169,8 +167,6 @@ myOrder.addDrink(myDrink);
 myDrink = new Drink(myGreenSmoothie, "small");
 
 myOrder.addDrink(myDrink);
-
-console.log(myOrder.drinkList);
 
 console.log(myOrder.calculateCost());
 
