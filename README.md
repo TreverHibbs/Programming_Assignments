@@ -1,2 +1,2 @@
-# Assignments
-A collection of all my college assignments
+# assignments
+A incomplete collection of all my college assignments
