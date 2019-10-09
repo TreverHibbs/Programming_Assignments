@@ -1,8 +1,18 @@
-#include<stdio.h>
+#include "parser.h"
 
-void main(arg, argv){
+void main(int argc, char *argv[]){
 
-    while (not end of postfix expression){ 
+    int length = 100;
+    char regex[length];
+    int i = 0;
+    FILE *fp; 
+    fp = fopen(argv[1], "r");
+    fgets(regex, length, (FILE*)fp);
+    printf("1 : %s\n", regex );
+    fclose(fp);
+    fgets(regex, length, (FILE*)fp);
+    
+    while (regex[i]){ 
         c = next character in postfix expression;
         if (c == ’&’){ 
             nFA2= pop();
