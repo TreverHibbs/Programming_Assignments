@@ -53,7 +53,7 @@ void main(int argc, char *argv[]){
                 nfa1->startState = 1;
                 nfa1->startState = 2;
                 nfa1->transitionPointer = transition; 
-                push(nfa1, top);
+                push(*nfa1, top);
             }
             i++;    
         }
