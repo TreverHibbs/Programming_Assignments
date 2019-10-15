@@ -138,7 +138,7 @@ class Order{
 class Inventory{
 	constructor(){
 		//each quantity in the quantity array will correspond with the ingrediant at the same index of the ingredient array.
-		this.ingredients = ["banana", "stawberries", "mango", "pineapple", "coconut", "creme", "spinach", "apple", "beet", "cucumber", "acai", "blueberrie", "granola", "orange"];
+		this.ingredients = ["banana", "strawberries", "mango", "pineapple", "coconut", "creme", "spinach", "apple", "beet", "cucumber", "acai", "blueberrie", "granola", "orange"];
 		this.quantity = [];
 	}
 }
@@ -192,7 +192,7 @@ class Store{
 
 myBananaberry = new MenuItem("Bananaberry", ["banana","strawberrie"],230,405,"Smoothie", "Classic Favorites", true);
 
-myMangoMagic = new MenuItem("Mango Magic", ["mango", "stawberrie", "pineapple", "coconut", "creme"], 250, 310, "Smoothie", "Classic Favorites", false);
+myMangoMagic = new MenuItem("Mango Magic", ["mango", "strawberrie", "pineapple", "coconut", "creme"], 250, 310, "Smoothie", "Classic Favorites", false);
 
 myGreenSmoothie = new MenuItem("Green Smoothie", ["banana", "spinach"], 295, 530, "Smoothie", "Healthy & Smart", false);
 
