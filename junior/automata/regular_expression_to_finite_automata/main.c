@@ -4,7 +4,9 @@ void main(int argc, char *argv[]){
 
     struct nfa nfa1; //= (struct nfa*)malloc(sizeof(struct nfa));
     struct nfa nfa2; //= *
-    struct node **top;
+    struct node tmp;
+    struct node *pointer = &tmp;
+    struct node **top = &pointer;
 
     int length = 100;
     char regex[length];
@@ -43,10 +45,10 @@ void main(int argc, char *argv[]){
                 nfa2 = pop(top);
                 nfa1 = pop(top);
                 //test code
-                printf("This is the result of poping. %i\n", nfa1.transitionPointer->symbol);
+                //printf("This is the result of poping. %i\n", nfa1.transitionPointer->symbol);
  
                 struct nfa new_nfa = nfa_union(nfa1, nfa2, current_state);
-                *top = push(new_nfa, *top);
+                push(new_nfa, top);
 
             } else if (c == '|') { 
                 //nfa2= pop();
@@ -66,6 +68,8 @@ void main(int argc, char *argv[]){
                 struct transition *transition = (struct transition*)malloc(sizeof(struct transition));
                 transition->state1 = (*(*current_state))++;
                 transition->state2 = (*(*current_state))++;
+                //test printf
+                //printf("this is current state%i", (*(*current_state)));
                 if(c == 'a'){
                     transition->symbol = 1;
                     //test code
@@ -90,9 +94,9 @@ void main(int argc, char *argv[]){
                 nfa1.finalState = transition->state2;
                 nfa1.transitionPointer = transition; 
                 nfa1.transitionPointer->nextTransitionPointer = NULL;
-                *top = push(nfa1, *top);
+                push(nfa1, top);
                 //test code
-                printf("This is end of desired if statement %i\n", *top);
+                //printf("This is end of desired if statement %i\n", *top);
             }
             i++;    
         }
@@ -102,5 +106,5 @@ void main(int argc, char *argv[]){
 
     }
 
-    print_nfa(top);
+    //print_nfa(top);
 }

@@ -22,8 +22,10 @@ struct node{
     struct node *next;
 };
 
-struct node* push(struct nfa, struct node *);
-void initialize(struct node *);
+void push(struct nfa, struct node **);
+void initialize(struct node **);
 struct nfa pop(struct node **);
 struct nfa nfa_union(struct nfa, struct nfa, int**);
 void print_nfa(struct node **);
+void nfa_concat(struct node **);
+void add_to_end(struct transition, struct transition);
