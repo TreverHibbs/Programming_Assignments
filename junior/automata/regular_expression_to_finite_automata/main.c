@@ -37,18 +37,11 @@ void main(int argc, char *argv[]){
             //printf("this is regex %s", regex);
             printf("this is c %c\n", c);
             if (c == '&'){ 
-                //0 = E transition symbol
-                //nfa1= pop();
-                //nfa2= pop();
-                //push(NFAthat accepts the concatenation of L(nFA1) followedby L(nFA2));
-
-                nfa2 = pop(top);
-                nfa1 = pop(top);
-                //test code
-                //printf("This is the result of poping. %i\n", nfa1.transitionPointer->symbol);
- 
-                struct nfa new_nfa = nfa_union(nfa1, nfa2, current_state);
+                
+                struct nfa new_nfa = nfa_concat(top);
                 push(new_nfa, top);
+                //test code
+                printf("this is new stack %i %i\n", (*top)->nfa.startState, (*top)->nfa.finalState);
 
             } else if (c == '|') { 
                 //nfa2= pop();

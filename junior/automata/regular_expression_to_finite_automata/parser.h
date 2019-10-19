@@ -27,5 +27,5 @@ void initialize(struct node **);
 struct nfa pop(struct node **);
 struct nfa nfa_union(struct nfa, struct nfa, int**);
 void print_nfa(struct node **);
-void nfa_concat(struct node **);
-void add_to_end(struct transition, struct transition);
+struct nfa nfa_concat(struct node **);
+void add_to_end(struct transition *, struct transition *);
