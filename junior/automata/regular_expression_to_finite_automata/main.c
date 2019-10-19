@@ -31,7 +31,9 @@ void main(int argc, char *argv[]){
                 //nfa2= pop();
                 //nfa1= pop();
                 //push(NFAthat accepts L(nFA1) |L(nFA2));
-                
+                struct nfa newNfa = nfa_union(top);
+
+                push(newNfa, top);
             } else if (c == '*') { 
                 //nfa1 = pop();
                 //push(NFAthat accepts L(nFA)star);

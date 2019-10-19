@@ -25,7 +25,7 @@ struct node{
 void push(struct nfa, struct node **);
 void initialize(struct node **);
 struct nfa pop(struct node **);
-struct nfa nfa_union(struct nfa, struct nfa, int**);
+struct nfa nfa_union(struct node **);
 void print_nfa(struct node **);
 struct nfa nfa_concat(struct node **);
 void add_to_end(struct transition *, struct transition *);
@@ -33,3 +33,4 @@ void print_transition_list(struct transition*, int, int);
 char convert_symbol_to_char(int symbol);
 int adjust_transitionPointer(struct transition*, int);
 void create_nfa_that_accepts_c(struct node **, char);
+void change_last_transition_state2(struct transition *, int);
