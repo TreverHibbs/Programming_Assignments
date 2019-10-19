@@ -29,3 +29,5 @@ struct nfa nfa_union(struct nfa, struct nfa, int**);
 void print_nfa(struct node **);
 struct nfa nfa_concat(struct node **);
 void add_to_end(struct transition *, struct transition *);
+void print_transition_list(struct transition*, int, int);
+char convert_symbol_to_char(int symbol);
