@@ -31,3 +31,5 @@ struct nfa nfa_concat(struct node **);
 void add_to_end(struct transition *, struct transition *);
 void print_transition_list(struct transition*, int, int);
 char convert_symbol_to_char(int symbol);
+void adjust_transitionPointer(struct transition*, int);
+void create_nfa_that_accepts_c(struct node **);

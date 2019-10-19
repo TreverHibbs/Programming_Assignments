@@ -32,13 +32,26 @@ void print_transition_list(struct transition* transition, int startState, int fi
 
     char symbol = convert_symbol_to_char(transition->symbol);
 
-    if(finalState == transition->state1){
-        printf("F (q%i,%c)",transition->state1,symbol);
+    if(0){
+        printf("F (q%i,%c)\n",transition->state1,symbol);
     }else if(startState == transition->state1){
-        printf("S (q%i,%c)-->q%i",transition->state1,symbol,transition->state2);
+        printf("S (q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);
+    }else if(transition == NULL){
+        return;
     }else{
-        printf("(q%i,%c)-->q%i",transition->state1,symbol,transition->state2);
-    }   
+        printf("(q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);   
+    }
     print_transition_list(transition->nextTransitionPointer, startState, finalState);
     return;
+}
+
+void adjust_transitionPointer(struct transition *myTransitionPointer, int startState){
+    if(myTransitionPointer == NULL){
+        return;
+    }
+
+    myTransitionPointer->state1=startState;
+    myTransitionPointer->state2=startState+1;
+
+    adjust_transitionPointer(myTransitionPointer->nextTransitionPointer, startState+1);
 }
