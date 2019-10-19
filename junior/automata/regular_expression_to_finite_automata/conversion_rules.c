@@ -1,27 +1,26 @@
 #include"parser.h"
 
 struct nfa nfa_concat(struct node **top){
-    struct transition new_transition;
+    struct transition *newTransition = (struct transition*)malloc(sizeof(struct transition));
 
     struct nfa nfa2 = pop(top);
     struct nfa nfa1 = pop(top);
 
-    new_transition.state1 = nfa1.finalState;
-    new_transition.state2 = nfa1.finalState+1;
-    new_transition.symbol = 0;
+    newTransition->state1 = nfa1.finalState;
+    newTransition->state2 = nfa1.finalState+1;
+    newTransition->symbol = 0;
 
-    adjust_transitionPointer(nfa2.transitionPointer, new_transition.state2);
+    nfa1.finalState = adjust_transitionPointer(nfa2.transitionPointer, newTransition->state2);
 
-    nfa1.finalState = nfa2.finalState+1;
-    add_to_end(nfa1.transitionPointer, &new_transition);
+    printf("nfa1.finalState = %i\n", nfa1.finalState);
+    add_to_end(nfa1.transitionPointer, newTransition);
 
-    new_transition.nextTransitionPointer = nfa2.transitionPointer;
+    newTransition->nextTransitionPointer = nfa2.transitionPointer;
 
     return(nfa1);
 }
 
-void create_nfa_that_accepts_c(struct node **top){
-    char c;
+void create_nfa_that_accepts_c(struct node **top, char c){
     struct nfa newNfa;
     struct transition *transition1 = (struct transition*)malloc(sizeof(struct transition));
     

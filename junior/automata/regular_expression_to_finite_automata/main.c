@@ -37,7 +37,7 @@ void main(int argc, char *argv[]){
                 //push(NFAthat accepts L(nFA)star);
             } else{
                 //create nfa that accepts c
-                create_nfa_that_accepts_c(top);
+                create_nfa_that_accepts_c(top, c);
             }
             i++;    
         }

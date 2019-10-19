@@ -36,22 +36,33 @@ void print_transition_list(struct transition* transition, int startState, int fi
         printf("F (q%i,%c)\n",transition->state1,symbol);
     }else if(startState == transition->state1){
         printf("S (q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);
+        if(finalState == transition->state2){
+            printf("F (q%i,E)\n",transition->state2);
+        }
     }else if(transition == NULL){
         return;
     }else{
-        printf("(q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);   
+        printf("(q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);  
+        if(finalState == transition->state2){
+            printf("F (q%i,E)\n",transition->state2);
+        } 
     }
     print_transition_list(transition->nextTransitionPointer, startState, finalState);
     return;
 }
 
-void adjust_transitionPointer(struct transition *myTransitionPointer, int startState){
-    if(myTransitionPointer == NULL){
-        return;
+int adjust_transitionPointer(struct transition *myTransitionPointer, int startState){
+    if(myTransitionPointer->nextTransitionPointer == NULL){
+        myTransitionPointer->state1=startState;
+        myTransitionPointer->state2=startState+1;
+
+        return(myTransitionPointer->state2);
     }
 
     myTransitionPointer->state1=startState;
     myTransitionPointer->state2=startState+1;
 
-    adjust_transitionPointer(myTransitionPointer->nextTransitionPointer, startState+1);
+    return(adjust_transitionPointer(myTransitionPointer->nextTransitionPointer, startState+1));
+
+    
 }
