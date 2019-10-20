@@ -49,34 +49,14 @@ void print_transition_list(struct transition* transition, int startState, int fi
         }
     }else if(transition->rule == 0){
         printf("(q%i,%c)->q%i\n", transition->state1, symbol, transition->state2);
+    }else if(transition->rule == 2){
+        printf("(q%i,%c)->q%i",transition->state1,symbol,transition->state2);
     }
 
     print_transition_list(transition->nextTransitionPointer, startState, finalState);
 
     return;
 
-    /*
-    if(transition->state2 == -1){
-        printf("(q%i,%c)-->q%i, q%i\n", transition->state1, symbol, 
-        transition->nextTransitionPointer->state1, transition->nextTransitionPointer->state2);
-
-        transition = transition->nextTransitionPointer;
-    }else if(startState == transition->state1){
-        printf("S (q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);
-        if(finalState == transition->state2){
-            printf("F (q%i,E)\n",transition->state2);
-        }
-    }else if(transition == NULL){
-        return;
-    }else{
-        printf("(q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);  
-        if(finalState == transition->state2){
-            printf("F (q%i,E)\n",transition->state2);
-        } 
-    }
-    print_transition_list(transition->nextTransitionPointer, startState, finalState);
-    return;
-    */
 }
 
 int adjust_transitionPointer(struct transition *myTransitionPointer, int startState){

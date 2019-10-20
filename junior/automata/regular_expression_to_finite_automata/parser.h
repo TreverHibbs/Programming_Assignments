@@ -20,6 +20,7 @@ struct nfa{
     //not have any states with over 101 next states.
     int startState;
     int finalState;
+    int actualStartState;
     struct transition *transitionPointer;
 };
 

@@ -25,7 +25,7 @@ struct nfa nfa_concat(struct node **top){
 
     add_to_end(nfa1.transitionPointer, newTransition1);
 
-
+    nfa1.actualStartState = nfa1.startState;
     return(nfa1);
 }
 
@@ -56,6 +56,7 @@ void create_nfa_that_accepts_c(struct node **top, char c){
     newNfa.finalState = transition->state2;
     transition->state3 = 0;
     newNfa.transitionPointer = transition;
+    newNfa.actualStartState = newNfa.startState;
     push(newNfa, top);
 }
 
@@ -72,14 +73,14 @@ struct nfa nfa_union(struct node **top){
     int newStartState = 0;
     int newFinalState = 0;
 
-    StartToNfa1AndNfa2->state1 = 1;
-    StartToNfa1AndNfa2->state2 = 2;
+    StartToNfa1AndNfa2->state1 = nfa1.startState;
+    StartToNfa1AndNfa2->state2 = nfa1.startState+1;
 
     //initialize Nfa1FinalToNewFinal with known values
     Nfa1FinalToNewFinal->rule=1;
     Nfa1FinalToNewFinal->symbol=0;
     Nfa1FinalToNewFinal->nextTransitionPointer = NULL;
-    Nfa1FinalToNewFinal->state1 = nfa1.startState;
+    Nfa1FinalToNewFinal->state1 = nfa1.finalState;
     Nfa1FinalToNewFinal->state2 = -1;
     Nfa1FinalToNewFinal->state3 = 0;
 
@@ -89,12 +90,12 @@ struct nfa nfa_union(struct node **top){
     //initialize start transition with known values
     //and point its values twards start state of nfa1 and nfa2.
     StartToNfa1AndNfa2->rule = 1;
-    StartToNfa1AndNfa2->state1 = 1;
+    StartToNfa1AndNfa2->state1 = nfa1.startState;
     StartToNfa1AndNfa2->state2 = nfa1.startState+1;
     StartToNfa1AndNfa2->state3 = nfa2.startState;
     StartToNfa1AndNfa2->nextTransitionPointer = nfa1.transitionPointer;
     StartToNfa1AndNfa2->symbol = 0;
-    
+
     Nfa2FinalToNewFinal->rule = 1;
     //set to final sate so that the transition points twards new final and end of nfa2. 
     Nfa2FinalToNewFinal->state1 = Nfa1FinalToNewFinal->state2-1;
@@ -110,7 +111,7 @@ struct nfa nfa_union(struct node **top){
     nfa1.transitionPointer = StartToNfa1AndNfa2;
 
     //print_transition_list(StartToNfa1AndNfa2, nfa1.startState, nfa1.finalState);
-
+    nfa1.actualStartState = nfa1.startState;
     return(nfa1);
 
 }
@@ -118,25 +119,29 @@ struct nfa nfa_union(struct node **top){
 struct nfa nfa_star(struct node **top){
     struct transition *newTransitionFinal = (struct transition*)malloc(sizeof(struct transition));
     struct transition *newTransitionStart = (struct transition*)malloc(sizeof(struct transition));
-    struct transition *newTransitionStarFlag = (struct transition*)malloc(sizeof(struct transition));
 
     struct nfa myNfa = pop(top);
 
+    //initialize new Transition final with known values.
+    //so that end of transition list points to it
+    //and it points twards new transition start.
     newTransitionFinal->state1 = myNfa.finalState;
     //-2 will indicate star operation for print
     newTransitionFinal->state2 = myNfa.finalState+1;
+    newTransitionFinal->state3 = 0;\
+    newTransitionFinal->rule = 2;
     newTransitionFinal->symbol = 0;
     newTransitionFinal->nextTransitionPointer = newTransitionStart;
-    newTransitionStart->state1 = myNfa.finalState+1;
-    newTransitionStart->state2 = 1;
-    newTransitionStart->symbol = 0;
-    newTransitionStart->nextTransitionPointer = newTransitionStarFlag;
-    newTransitionStarFlag->state1 = myNfa.finalState+1;
-    newTransitionStarFlag->state2 = -2;
-    newTransitionStarFlag->symbol = 0;
-    newTransitionStarFlag->nextTransitionPointer = NULL;
 
-    myNfa.startState = myNfa.finalState+1;
+    //initialize new transition start with known vlues.
+    newTransitionStart->state1 = myNfa.finalState+1;
+    newTransitionStart->state2 = myNfa.actualStartState;
+    newTransitionStart->state3 = 0;
+    newTransitionStart->rule = 2;
+    newTransitionStart->symbol = 0;
+    newTransitionStart->nextTransitionPointer = NULL;
+
+    myNfa.actualStartState = myNfa.finalState+1;
     myNfa.finalState = myNfa.finalState+1;
 
     add_to_end(myNfa.transitionPointer, newTransitionFinal);
