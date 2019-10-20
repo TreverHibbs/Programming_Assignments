@@ -46,10 +46,10 @@ void main(int argc, char *argv[]){
         }
         
         print_nfa(top);
-        //printf("**********************\n");
-        //printf("*                    *\n");
-        ///printf("*       NEXT FA      *\n");
-        //printf("*                    *\n");
-        //printf("**********************\n");
+        printf("**********************\n");
+        printf("*                    *\n");
+        printf("*                    *\n");
+        printf("*                    *\n");
+        printf("**********************\n");
     }
 }
