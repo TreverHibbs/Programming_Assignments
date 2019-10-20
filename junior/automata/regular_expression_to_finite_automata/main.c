@@ -32,19 +32,24 @@ void main(int argc, char *argv[]){
                 //nfa1= pop();
                 //push(NFAthat accepts L(nFA1) |L(nFA2));
                 struct nfa newNfa = nfa_union(top);
-
                 push(newNfa, top);
             } else if (c == '*') { 
                 //nfa1 = pop();
                 //push(NFAthat accepts L(nFA)star);
+                struct nfa newNfa = nfa_star(top);
+                push(newNfa, top);
             } else{
                 //create nfa that accepts c
                 create_nfa_that_accepts_c(top, c);
             }
             i++;    
         }
-
+        
+        print_nfa(top);
+        //printf("**********************\n");
+        //printf("*                    *\n");
+        ///printf("*       NEXT FA      *\n");
+        //printf("*                    *\n");
+        //printf("**********************\n");
     }
-
-    print_nfa(top);
 }

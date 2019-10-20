@@ -34,3 +34,4 @@ char convert_symbol_to_char(int symbol);
 int adjust_transitionPointer(struct transition*, int);
 void create_nfa_that_accepts_c(struct node **, char);
 void change_last_transition_state2(struct transition *, int);
+struct nfa nfa_star(struct node**);

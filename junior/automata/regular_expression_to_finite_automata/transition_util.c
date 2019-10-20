@@ -33,22 +33,23 @@ void print_transition_list(struct transition* transition, int startState, int fi
     char symbol = convert_symbol_to_char(transition->symbol);
 
     if(transition->state2 == -1){
-        
-    }else if(startState == transition->state1){
+        printf("(q%i,%c)-->q%i, q%i\n", transition->state1, symbol, 
+        transition->nextTransitionPointer->state1, transition->nextTransitionPointer->state2);
+
+        transition = transition->nextTransitionPointer;
+    }else if(transition->nextTransitionPointer->state2 == -2){
+        printf("S (q%i,%c)-->q%i\n", transition->state1, symbol, transition->state2);
+        printf("F (q%i,E)\n",transition->state1);
+    }else if(startState == transition->state1 && transition->state2 != -2){
         printf("S (q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);
-        if(finalState == transition->state2){
+        if(finalState == transition->state2 && transition->nextTransitionPointer == NULL){
             printf("F (q%i,E)\n",transition->state2);
         }
     }else if(transition == NULL){
         return;
-    }else if(transition->state2 == -1){
-        printf("(q%i,%c)-->q%i, q%i", transition->state1, transition->symbol, 
-        transition->nextTransitionPointer->state1, transition->nextTransitionPointer->state2);
-
-        transition = transition->nextTransitionPointer;
     }else{
         printf("(q%i,%c)-->q%i\n",transition->state1,symbol,transition->state2);  
-        if(finalState == transition->state2){
+        if(finalState == transition->state2 && transition->nextTransitionPointer == NULL){
             printf("F (q%i,E)\n",transition->state2);
         } 
     }

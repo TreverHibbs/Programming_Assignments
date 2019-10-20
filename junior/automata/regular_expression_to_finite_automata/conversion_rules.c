@@ -10,9 +10,8 @@ struct nfa nfa_concat(struct node **top){
     newTransition->state2 = nfa1.finalState+1;
     newTransition->symbol = 0;
 
-    nfa1.finalState = adjust_transitionPointer(nfa2.transitionPointer, newTransition->state2);
+    nfa1.finalState = adjust_transitionPointer(nfa2.transitionPointer, nfa1.finalState+1);
 
-    printf("nfa1.finalState = %i\n", nfa1.finalState);
     add_to_end(nfa1.transitionPointer, newTransition);
 
     newTransition->nextTransitionPointer = nfa2.transitionPointer;
@@ -58,11 +57,11 @@ struct nfa nfa_union(struct node **top){
 
     newTransitionStart->nextTransitionPointer = newTransitionStartNext;
     newTransitionStart->state1 = 1;
+    //state2 = -1 will identify union transitions
+    newTransitionStart->state2 = -1;
     newTransitionStart->symbol = 0;
     myNfa1.finalState = adjust_transitionPointer(myNfa1.transitionPointer, 2);
     myNfa1.startState = 2;
-    //state2 = -1 will identify union transitions
-    newTransitionStart->state2 = -1;
     newTransitionStartNext->state1 = 2;
     newTransitionStartNext->nextTransitionPointer = myNfa1.transitionPointer;
 
@@ -76,7 +75,8 @@ struct nfa nfa_union(struct node **top){
 
     newTransitionFinalNfa2->symbol = 0;
     newTransitionFinalNfa2->state1 = myNfa2.finalState;
-    newTransitionFinalNfa2->state2 = myNfa2.finalState+1;
+    newTransitionFinalNfa2->state2 = myNfa2.finalState+2;
+    newTransitionFinalNfa2->nextTransitionPointer = NULL;
     add_to_end(myNfa2.transitionPointer, newTransitionFinalNfa2);
 
     myNfa1.finalState = myNfa2.finalState+1;
@@ -84,4 +84,33 @@ struct nfa nfa_union(struct node **top){
     myNfa1.transitionPointer = newTransitionStart;
 
     return(myNfa1);
+}
+
+struct nfa nfa_star(struct node **top){
+    struct transition *newTransitionFinal = (struct transition*)malloc(sizeof(struct transition));
+    struct transition *newTransitionStart = (struct transition*)malloc(sizeof(struct transition));
+    struct transition *newTransitionStarFlag = (struct transition*)malloc(sizeof(struct transition));
+
+    struct nfa myNfa = pop(top);
+
+    newTransitionFinal->state1 = myNfa.finalState;
+    //-2 will indicate star operation for print
+    newTransitionFinal->state2 = myNfa.finalState+1;
+    newTransitionFinal->symbol = 0;
+    newTransitionFinal->nextTransitionPointer = newTransitionStart;
+    newTransitionStart->state1 = myNfa.finalState+1;
+    newTransitionStart->state2 = 1;
+    newTransitionStart->symbol = 0;
+    newTransitionStart->nextTransitionPointer = newTransitionStarFlag;
+    newTransitionStarFlag->state1 = myNfa.finalState+1;
+    newTransitionStarFlag->state2 = -2;
+    newTransitionStarFlag->symbol = 0;
+    newTransitionStarFlag->nextTransitionPointer = NULL;
+
+    myNfa.startState = myNfa.finalState+1;
+    myNfa.finalState = myNfa.finalState+1;
+
+    add_to_end(myNfa.transitionPointer, newTransitionFinal);
+
+    return(myNfa);
 }
