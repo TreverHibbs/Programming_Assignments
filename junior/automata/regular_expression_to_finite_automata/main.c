@@ -44,7 +44,11 @@ void main(int argc, char *argv[]){
             }
             i++;    
         }
-        
+        printf("**********************\n");
+        printf("*                    *\n");
+        printf("*         Test       *\n");
+        printf("*                    *\n");
+        printf("**********************\n");
         print_nfa(top);
         printf("**********************\n");
         printf("*                    *\n");
