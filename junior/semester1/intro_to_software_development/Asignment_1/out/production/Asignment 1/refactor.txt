@@ -1,0 +1,7 @@
+Refactor after step 4: Changed the variable name of the Stack object in the test file from S to myStack.
+
+Refactor after step 6: Change the return value of the pop function so that fewer lines of code are used.
+
+Refactor after step 7: Change the data type of stack array to float so that NaN can be used.
+
+Refactor after step 11: Changed the data type of stack array back to int after complications.
